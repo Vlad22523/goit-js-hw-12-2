@@ -5,8 +5,6 @@
   |============================
 */
 @import url('./reset.css');
-@import url('./vite-promo.css');
-@import url('./header.css');
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -22,4 +20,137 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+.div-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 20px auto;
+  position: relative;
+  border: 3px solid #000000;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  width: 6px;
+  height: 24px;
+  background: #0c0c0c;
+  transform: rotate(-45deg);
+  position: absolute;
+  bottom: -20px;
+  left: 46px;
+}
+
+@keyframes animloader {
+  0% {
+    transform: translate(-10px, -10px);
+  }
+  25% {
+    transform: translate(-10px, 10px);
+  }
+  50% {
+    transform: translate(10px, 10px);
+  }
+  75% {
+    transform: translate(10px, -10px);
+  }
+  100% {
+    transform: translate(-10px, -10px);
+  }
+}
+
+.hidden {
+  display: hidden;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  width: 272px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px #808080 solid;
+  color: #808080;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding-left: 16px;
+}
+
+.btn-search {
+  color: white;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  background-color: rgba(78, 117, 255, 1);
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  border-radius: 8px;
+  margin-left: 8px;
+}
+
+.btn-search:hover {
+  background-color: rgb(59, 90, 203);
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.gallery-item {
+  display: inline-block;
+  border-radius: 10px;
+  border: 1px solid #9a9898;
+  overflow: hidden;
+  transition: all 200ms ease-in-out;
+  box-shadow: 4px 4px 10px rgb(162, 161, 161);
+}
+
+.gallery-item img {
+  height: 270px;
+  width: 360px;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.info {
+  padding: 15px;
+}
+
+p {
+  color: #2e2f42;
+  font-size: 12px;
+  font-family: Montserrat;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.48px;
+}
+
+p:not(:first-child) {
+  margin-top: 10px;
 }
