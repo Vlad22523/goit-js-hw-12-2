@@ -10,13 +10,17 @@ import {
 } from './js/render-function';
 
 const form = document.querySelector('.form');
+const loadBtn = document.querySelector('.load-more');
+
+let inputValue = '';
+let page = 1;
+
+loadBtn.addEventListener('click', clickBtnLoad);
 
 form.addEventListener('submit', e => {
   e.preventDefault();
 
-  gallery.innerHTML = '';
-
-  const inputValue = e.target.elements.searchQuery.value;
+  inputValue = e.target.elements.searchQuery.value.trim();
 
   if (!inputValue.length) {
     iziToast.error({
@@ -24,8 +28,12 @@ form.addEventListener('submit', e => {
       message: '"Sorry, input is empty"',
       position: 'topRight',
     });
+    loadBtn.classList.add('hidden');
     return;
   }
+  page = 1;
+
+  gallery.innerHTML = '';
 
   showLoader();
 
@@ -38,11 +46,14 @@ form.addEventListener('submit', e => {
             '"Sorry, there are no images matching your search query. Please try again!"',
           position: 'topRight',
         });
+        loadBtn.classList.add('hidden');
         hideLoader();
         return;
       }
-      const markup = createMarkup(data.hits);
-      gallery.innerHTML = markup;
+      loadBtn.classList.remove('hidden');
+      checkBtn(data);
+      createMarkup(data.hits);
+      // gallery.innerHTML = markup;
       lightbox.refresh();
       hideLoader();
     })
@@ -53,7 +64,49 @@ form.addEventListener('submit', e => {
           'An error occurred while fetching images. Please try again later.',
         position: 'topRight',
       });
-      hideLoader();
       console.error('Error fetching pictures:', error);
+      hideLoader();
     });
 });
+
+async function clickBtnLoad() {
+  page++;
+  loadBtn.disabled = true;
+  showLoader();
+  try {
+    const data = await getPictures(inputValue, page);
+    checkBtn(data);
+    createMarkup(data.hits);
+    createScrollFunction();
+  } catch (err) {
+    console.log(err);
+  } finally {
+    loadBtn.disabled = false;
+    hideLoader();
+  }
+}
+
+function checkBtn(data) {
+  if (page >= Math.ceil(data.totalHits / 15)) {
+    loadBtn.classList.add('hidden');
+    iziToast.error({
+      title: 'Error',
+      message:
+        'An error occurred while fetching images. Please try again later.',
+      position: 'topRight',
+    });
+  }
+}
+
+function createScrollFunction() {
+  let elem = document.querySelector('.gallery-item');
+  let rect = elem.getBoundingClientRect();
+  console.log(rect);
+  if (elem) {
+    window.scrollBy({
+      top: rect.height + 330,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+}
