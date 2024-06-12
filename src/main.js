@@ -74,6 +74,7 @@ form.addEventListener('submit', e => {
 async function clickBtnLoad() {
   page++;
   loadBtn.disabled = true;
+  loadBtn.classList.add('hidden');
   showLoader();
   try {
     const data = await getPictures(inputValue, page);
@@ -85,6 +86,7 @@ async function clickBtnLoad() {
   } finally {
     loadBtn.disabled = false;
     hideLoader();
+    loadBtn.classList.remove('hidden');
   }
 }
 
