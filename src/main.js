@@ -86,7 +86,6 @@ async function clickBtnLoad() {
   } finally {
     loadBtn.disabled = false;
     hideLoader();
-    loadBtn.classList.remove('hidden');
   }
 }
 
@@ -99,6 +98,8 @@ function checkBtn(data) {
         'An error occurred while fetching images. Please try again later.',
       position: 'topRight',
     });
+  } else {
+    loadBtn.classList.remove('hidden');
   }
 }
 
