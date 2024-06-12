@@ -22,6 +22,8 @@ form.addEventListener('submit', e => {
 
   inputValue = e.target.elements.searchQuery.value.trim();
 
+  loadBtn.classList.add('hidden');
+
   if (!inputValue.length) {
     iziToast.error({
       title: 'Error',
@@ -104,7 +106,7 @@ function createScrollFunction() {
   console.log(rect);
   if (elem) {
     window.scrollBy({
-      top: rect.height + 330,
+      top: rect.height + 300,
       left: 0,
       behavior: 'smooth',
     });
